@@ -1,0 +1,22 @@
+# VS Code / Business Central configuration
+.vscode/launch.json
+app.json
+rad.json
+ `*.rdl` – Report layout file
+
+
+# AL dependencies/cache
+.alpackages/
+.alcache/
+.snapshots
+.altestrunner
+
+#
+
+# Temporary files
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
