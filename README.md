@@ -1,4 +1,4 @@
-Purchase Order Extension – Business Central AL Practice Project
+# Purchase Order Extension – Business Central AL Practice Project
 Overview
 
 This project is a practice project for learning Microsoft Dynamics 365 Business Central AL development.
