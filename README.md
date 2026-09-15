@@ -17,6 +17,31 @@ This project is primarily intended for learning and practice purpose
 Project Objective
 
 Instead of changing the standard Purchase Header table or Purchase Order page directly, we can uses AL extension objects.
+# Purchase-Order-Extension/
+│
+├──  Tables/
+│   ├── table_extension.al
+│   └── .al
+│
+├──  Pages/
+│   ├── page.al
+│   ├── cardpage_extnsn.al
+
+│
+├──  Reports/
+│   ├── Purchase_order_report1.al
+│   └──  Report Layout/
+│       └── PurchaseReport.rdl
+│
+├──  .vscode/
+│   ├── launch.json
+│   
+│
+├── app.json
+├── README.md
+├── requirements.txt
+└── .gitignore
+
 
 The basic customization flow is:
 
@@ -67,18 +92,15 @@ Page extension : A Page Extension allows developers to extend an existing Busine
 
 An Action is a button or command that allows a user to perform an operation from a Business Central page.
 
-This project adds two actions:
+This purchase order extension  adds two actions:
 
 Approve Internally
 A custom action that demonstrates how an action can execute AL code when the user clicks a button.
-
 action(ApproveInternally) - it displays a confirmation message.
 
 Send Alert
 A custom action that checks the value of the Order_satis field and displays a different message depending on the selected satisfaction level.
-
 This demonstrates:
-
 OnAction() triggers
 if / else if conditions
 Enum values
@@ -88,12 +110,11 @@ Project Structure
 Purchase Order Extension
 
 
-Important AL Project Files
+# Important AL Project Files
 app.json
 app.json is the manifest file of an AL extension.
 
 It contains important project information such as:
-
 Extension name
 Publisher
 Version
@@ -112,18 +133,16 @@ Example:
 
 When we create a new AL project in Visual Studio Code, Business Central's AL extension tooling automatically creates the app.json file for you.
 
-launch.json
+# launch.json
 launch.json contains the debugging and Business Central connection configuration used by Visual Studio Code.
 
 It can specify information such as:
-
 Business Central server
 Environment
 Tenant
 Authentication settings
 Startup object
 When you create a new AL project using the AL: Go! command in Visual Studio Code, the AL development environment generates the required project files, including app.json and the .vscode/launch.json configuration.
-
 launch.json can contain environment-specific configuration, so review it before committing a public repository.
 
 
@@ -135,19 +154,52 @@ Visual Studio Code
 Business Central Sandbox
 Learning Objectives
 
-Page Extensions
-Extending standard Business Central pages
-Adding fields to existing pages
-Creating page actions
-OnAction() triggers
-Conditional statements
-Enum usage
-Accessing record fields using Rec
-AL project structure
-app.json
-launch.json
-Publishing and debugging an extension in a Business Central Sandbox
-Purpose
-The goal is to understand how custom AL functionality can be added to standard Business Central objects while following the extensi
 
-report 50143 "Purchase Order Report"
+# "Purchase Order Report"
+Purchase Order Report – Business Central
+Overview
+A custom Purchase Order Report developed using AL for Microsoft Dynamics 365 Business Central. The report retrieves Purchase Order header and line details, enriches the data with vendor GST/state information and company branding, and generates a formatted document using an RDLC layout.
+
+Key Features
+
+- Custom Purchase Order report (Report ID: 50143)
+- Displays company logo from Company Information
+- Retrieves vendor name and GST registration number
+- Converts State Code into a readable State Description
+- Displays Purchase Line details:
+- Item/Account No.
+- Quantity
+- HSN/SAC Code
+- Unit of Measure
+- Amount
+  
+Links Purchase Header with Purchase Lines using DataItemLink
+Uses a custom RDLC layout for document formatting
+Includes user validation before report execution
+
+
+Report Processing
+
+The report uses the Purchase Header as the parent dataitem and Purchase Line as the child dataitem.
+
+The Purchase Line records are filtered using:
+
+DataItemLink = "Document No." = field("No.");
+
+
+The report also performs a State table lookup in OnAfterGetRecord() to convert the Purchase Order's state code into its corresponding description.
+
+The company logo is loaded in OnPreReport() using the Company Information record.
+
+📋 Dataset
+Field	Source
+Vendor Name	Purchase Header
+GST Registration No.	Purchase Header
+State Code	Purchase Header
+State Description	State Table
+No.	Purchase Line
+Quantity	Purchase Line
+HSN/SAC Code	Purchase Line
+Amount	Purchase Line
+Unit of Measure	Purchase Line
+Company Logo	Company Information
